@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+	<property name="APPLICATION_NAME" value="herocheer-face-provider"/>
+	<property name="LOG_SAVE_PATH" value="logs"/>
+	<property name="CONSOLE_LOG_PATTERN"
+			  value="%d{yyyy-MM-dd HH:mm:ss.SSS} ${PID:-} [%thread] - %5p %logger{39}: %m%n"/>
+
+	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>DEBUG</level>
+		</filter>
+	</appender>
+
+	<appender name="errorFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${LOG_SAVE_PATH}/${APPLICATION_NAME}-error.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${LOG_SAVE_PATH}/${APPLICATION_NAME}-error.%d{yyyy-MM-dd}.log.zip</FileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+			<charset class="java.nio.charset.Charset">UTF-8</charset>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+	<appender name="logFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${LOG_SAVE_PATH}/${APPLICATION_NAME}.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${LOG_SAVE_PATH}/${APPLICATION_NAME}.%d{yyyy-MM-dd}.log.zip</FileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>DENY</onMatch>
+			<onMismatch>ACCEPT</onMismatch>
+		</filter>
+	</appender>
+	<appender name="asyncConsoleAppender" class="ch.qos.logback.classic.AsyncAppender" includeLocation="true">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>10000</queueSize>
+		<appender-ref ref="consoleAppender" />
+	</appender>
+	<appender name="asyncErrorFileAppender" class="ch.qos.logback.classic.AsyncAppender" includeLocation="true">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>10000</queueSize>
+		<appender-ref ref="errorFileAppender"/>
+	</appender>
+	<appender name="asyncLogAppender" class="ch.qos.logback.classic.AsyncAppender" includeLocation="true">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>10000</queueSize>
+		<appender-ref ref="logFileAppender"/>
+	</appender>
+	<logger name="com.alibaba.spring" level="debug"/>
+	<logger name="org.springframework" level="debug"/>
+	<logger name="org.apache" level="debug"/>
+	<logger name="io.netty" level="debug"/>
+	<logger name="org.hibernate" level="debug"/>
+	<logger name="com.herocheer" level="debug"/>
+	<!--全异步输出info级以上的日志信息-->
+
+	<root>
+		<appender-ref ref="asyncConsoleAppender" />
+		<appender-ref ref="asyncLogAppender" />
+		<appender-ref ref="asyncErrorFileAppender" />
+	</root>
+</configuration>

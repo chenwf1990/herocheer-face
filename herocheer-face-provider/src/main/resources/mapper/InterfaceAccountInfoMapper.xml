@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.herocheer.face.dao.InterfaceAccountInfoMapper">
+  <resultMap id="BaseResultMap" type="com.herocheer.face.entity.InterfaceAccountInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="userKey" jdbcType="VARCHAR" property="userKey" />
+    <result column="userAuth" jdbcType="VARCHAR" property="userAuth" />
+    <result column="dayMaxCount" jdbcType="INTEGER" property="dayMaxCount" />
+    <result column="monthMaxCount" jdbcType="INTEGER" property="monthMaxCount" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="lastAccess" jdbcType="BIGINT" property="lastAccess" />
+    <result column="creatorId" jdbcType="BIGINT" property="creatorId" />
+    <result column="createdBy" jdbcType="VARCHAR" property="createdBy" />
+    <result column="createdTime" jdbcType="BIGINT" property="createdTime" />
+    <result column="updaterId" jdbcType="BIGINT" property="updaterId" />
+    <result column="updatedBy" jdbcType="VARCHAR" property="updatedBy" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, userKey, userAuth, dayMaxCount, monthMaxCount, state, lastAccess, creatorId, 
+    createdBy, createdTime, updaterId, updatedBy
+  </sql>
+  <select id="selectByExample" parameterType="com.herocheer.face.entity.InterfaceAccountInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from interface_account_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from interface_account_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from interface_account_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.herocheer.face.entity.InterfaceAccountInfoExample">
+    delete from interface_account_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.herocheer.face.entity.InterfaceAccountInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into interface_account_info (userKey, userAuth, dayMaxCount, 
+      monthMaxCount, state, lastAccess, 
+      creatorId, createdBy, createdTime, 
+      updaterId, updatedBy)
+    values (#{userKey,jdbcType=VARCHAR}, #{userAuth,jdbcType=VARCHAR}, #{dayMaxCount,jdbcType=INTEGER}, 
+      #{monthMaxCount,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{lastAccess,jdbcType=BIGINT}, 
+      #{creatorId,jdbcType=BIGINT}, #{createdBy,jdbcType=VARCHAR}, #{createdTime,jdbcType=BIGINT}, 
+      #{updaterId,jdbcType=BIGINT}, #{updatedBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.herocheer.face.entity.InterfaceAccountInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into interface_account_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userKey != null">
+        userKey,
+      </if>
+      <if test="userAuth != null">
+        userAuth,
+      </if>
+      <if test="dayMaxCount != null">
+        dayMaxCount,
+      </if>
+      <if test="monthMaxCount != null">
+        monthMaxCount,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="lastAccess != null">
+        lastAccess,
+      </if>
+      <if test="creatorId != null">
+        creatorId,
+      </if>
+      <if test="createdBy != null">
+        createdBy,
+      </if>
+      <if test="createdTime != null">
+        createdTime,
+      </if>
+      <if test="updaterId != null">
+        updaterId,
+      </if>
+      <if test="updatedBy != null">
+        updatedBy,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userKey != null">
+        #{userKey,jdbcType=VARCHAR},
+      </if>
+      <if test="userAuth != null">
+        #{userAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="dayMaxCount != null">
+        #{dayMaxCount,jdbcType=INTEGER},
+      </if>
+      <if test="monthMaxCount != null">
+        #{monthMaxCount,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="lastAccess != null">
+        #{lastAccess,jdbcType=BIGINT},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="updaterId != null">
+        #{updaterId,jdbcType=BIGINT},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.herocheer.face.entity.InterfaceAccountInfoExample" resultType="java.lang.Long">
+    select count(*) from interface_account_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update interface_account_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userKey != null">
+        userKey = #{record.userKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userAuth != null">
+        userAuth = #{record.userAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dayMaxCount != null">
+        dayMaxCount = #{record.dayMaxCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.monthMaxCount != null">
+        monthMaxCount = #{record.monthMaxCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastAccess != null">
+        lastAccess = #{record.lastAccess,jdbcType=BIGINT},
+      </if>
+      <if test="record.creatorId != null">
+        creatorId = #{record.creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createdBy != null">
+        createdBy = #{record.createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdTime != null">
+        createdTime = #{record.createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updaterId != null">
+        updaterId = #{record.updaterId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatedBy != null">
+        updatedBy = #{record.updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update interface_account_info
+    set id = #{record.id,jdbcType=BIGINT},
+      userKey = #{record.userKey,jdbcType=VARCHAR},
+      userAuth = #{record.userAuth,jdbcType=VARCHAR},
+      dayMaxCount = #{record.dayMaxCount,jdbcType=INTEGER},
+      monthMaxCount = #{record.monthMaxCount,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=INTEGER},
+      lastAccess = #{record.lastAccess,jdbcType=BIGINT},
+      creatorId = #{record.creatorId,jdbcType=BIGINT},
+      createdBy = #{record.createdBy,jdbcType=VARCHAR},
+      createdTime = #{record.createdTime,jdbcType=BIGINT},
+      updaterId = #{record.updaterId,jdbcType=BIGINT},
+      updatedBy = #{record.updatedBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.herocheer.face.entity.InterfaceAccountInfo">
+    update interface_account_info
+    <set>
+      <if test="userKey != null">
+        userKey = #{userKey,jdbcType=VARCHAR},
+      </if>
+      <if test="userAuth != null">
+        userAuth = #{userAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="dayMaxCount != null">
+        dayMaxCount = #{dayMaxCount,jdbcType=INTEGER},
+      </if>
+      <if test="monthMaxCount != null">
+        monthMaxCount = #{monthMaxCount,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="lastAccess != null">
+        lastAccess = #{lastAccess,jdbcType=BIGINT},
+      </if>
+      <if test="creatorId != null">
+        creatorId = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="createdBy != null">
+        createdBy = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        createdTime = #{createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="updaterId != null">
+        updaterId = #{updaterId,jdbcType=BIGINT},
+      </if>
+      <if test="updatedBy != null">
+        updatedBy = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.herocheer.face.entity.InterfaceAccountInfo">
+    update interface_account_info
+    set userKey = #{userKey,jdbcType=VARCHAR},
+      userAuth = #{userAuth,jdbcType=VARCHAR},
+      dayMaxCount = #{dayMaxCount,jdbcType=INTEGER},
+      monthMaxCount = #{monthMaxCount,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      lastAccess = #{lastAccess,jdbcType=BIGINT},
+      creatorId = #{creatorId,jdbcType=BIGINT},
+      createdBy = #{createdBy,jdbcType=VARCHAR},
+      createdTime = #{createdTime,jdbcType=BIGINT},
+      updaterId = #{updaterId,jdbcType=BIGINT},
+      updatedBy = #{updatedBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

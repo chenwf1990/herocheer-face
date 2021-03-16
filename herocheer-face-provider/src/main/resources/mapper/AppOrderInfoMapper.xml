@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.herocheer.face.dao.AppOrderInfoMapper">
+  <resultMap id="BaseResultMap" type="com.herocheer.face.entity.AppOrderInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="appAcctId" jdbcType="BIGINT" property="appAcctId" />
+    <result column="appExpensesId" jdbcType="BIGINT" property="appExpensesId" />
+    <result column="orderNo" jdbcType="VARCHAR" property="orderNo" />
+    <result column="payType" jdbcType="INTEGER" property="payType" />
+    <result column="payNo" jdbcType="VARCHAR" property="payNo" />
+    <result column="payAmount" jdbcType="DECIMAL" property="payAmount" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="expireBeginTime" jdbcType="BIGINT" property="expireBeginTime" />
+    <result column="expireEndTime" jdbcType="BIGINT" property="expireEndTime" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="useNum" jdbcType="INTEGER" property="useNum" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="lastAccess" jdbcType="BIGINT" property="lastAccess" />
+    <result column="creatorId" jdbcType="BIGINT" property="creatorId" />
+    <result column="createdBy" jdbcType="VARCHAR" property="createdBy" />
+    <result column="createdTime" jdbcType="BIGINT" property="createdTime" />
+    <result column="updaterId" jdbcType="BIGINT" property="updaterId" />
+    <result column="updatedBy" jdbcType="VARCHAR" property="updatedBy" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, appAcctId, appExpensesId, orderNo, payType, payNo, payAmount, type, expireBeginTime, 
+    expireEndTime, num, useNum, status, lastAccess, creatorId, createdBy, createdTime, 
+    updaterId, updatedBy
+  </sql>
+  <select id="selectByExample" parameterType="com.herocheer.face.entity.AppOrderInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from app_order_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from app_order_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from app_order_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.herocheer.face.entity.AppOrderInfoExample">
+    delete from app_order_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.herocheer.face.entity.AppOrderInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into app_order_info (appAcctId, appExpensesId, orderNo, 
+      payType, payNo, payAmount, 
+      type, expireBeginTime, expireEndTime, 
+      num, useNum, status, 
+      lastAccess, creatorId, createdBy, 
+      createdTime, updaterId, updatedBy
+      )
+    values (#{appAcctId,jdbcType=BIGINT}, #{appExpensesId,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, 
+      #{payType,jdbcType=INTEGER}, #{payNo,jdbcType=VARCHAR}, #{payAmount,jdbcType=DECIMAL}, 
+      #{type,jdbcType=INTEGER}, #{expireBeginTime,jdbcType=BIGINT}, #{expireEndTime,jdbcType=BIGINT}, 
+      #{num,jdbcType=INTEGER}, #{useNum,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{lastAccess,jdbcType=BIGINT}, #{creatorId,jdbcType=BIGINT}, #{createdBy,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=BIGINT}, #{updaterId,jdbcType=BIGINT}, #{updatedBy,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.herocheer.face.entity.AppOrderInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into app_order_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="appAcctId != null">
+        appAcctId,
+      </if>
+      <if test="appExpensesId != null">
+        appExpensesId,
+      </if>
+      <if test="orderNo != null">
+        orderNo,
+      </if>
+      <if test="payType != null">
+        payType,
+      </if>
+      <if test="payNo != null">
+        payNo,
+      </if>
+      <if test="payAmount != null">
+        payAmount,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="expireBeginTime != null">
+        expireBeginTime,
+      </if>
+      <if test="expireEndTime != null">
+        expireEndTime,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="useNum != null">
+        useNum,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="lastAccess != null">
+        lastAccess,
+      </if>
+      <if test="creatorId != null">
+        creatorId,
+      </if>
+      <if test="createdBy != null">
+        createdBy,
+      </if>
+      <if test="createdTime != null">
+        createdTime,
+      </if>
+      <if test="updaterId != null">
+        updaterId,
+      </if>
+      <if test="updatedBy != null">
+        updatedBy,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="appAcctId != null">
+        #{appAcctId,jdbcType=BIGINT},
+      </if>
+      <if test="appExpensesId != null">
+        #{appExpensesId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="payNo != null">
+        #{payNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payAmount != null">
+        #{payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="expireBeginTime != null">
+        #{expireBeginTime,jdbcType=BIGINT},
+      </if>
+      <if test="expireEndTime != null">
+        #{expireEndTime,jdbcType=BIGINT},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="useNum != null">
+        #{useNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="lastAccess != null">
+        #{lastAccess,jdbcType=BIGINT},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="updaterId != null">
+        #{updaterId,jdbcType=BIGINT},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.herocheer.face.entity.AppOrderInfoExample" resultType="java.lang.Long">
+    select count(*) from app_order_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update app_order_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.appAcctId != null">
+        appAcctId = #{record.appAcctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.appExpensesId != null">
+        appExpensesId = #{record.appExpensesId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderNo != null">
+        orderNo = #{record.orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payType != null">
+        payType = #{record.payType,jdbcType=INTEGER},
+      </if>
+      <if test="record.payNo != null">
+        payNo = #{record.payNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payAmount != null">
+        payAmount = #{record.payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.expireBeginTime != null">
+        expireBeginTime = #{record.expireBeginTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.expireEndTime != null">
+        expireEndTime = #{record.expireEndTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.num != null">
+        num = #{record.num,jdbcType=INTEGER},
+      </if>
+      <if test="record.useNum != null">
+        useNum = #{record.useNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastAccess != null">
+        lastAccess = #{record.lastAccess,jdbcType=BIGINT},
+      </if>
+      <if test="record.creatorId != null">
+        creatorId = #{record.creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createdBy != null">
+        createdBy = #{record.createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdTime != null">
+        createdTime = #{record.createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updaterId != null">
+        updaterId = #{record.updaterId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatedBy != null">
+        updatedBy = #{record.updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update app_order_info
+    set id = #{record.id,jdbcType=BIGINT},
+      appAcctId = #{record.appAcctId,jdbcType=BIGINT},
+      appExpensesId = #{record.appExpensesId,jdbcType=BIGINT},
+      orderNo = #{record.orderNo,jdbcType=VARCHAR},
+      payType = #{record.payType,jdbcType=INTEGER},
+      payNo = #{record.payNo,jdbcType=VARCHAR},
+      payAmount = #{record.payAmount,jdbcType=DECIMAL},
+      type = #{record.type,jdbcType=INTEGER},
+      expireBeginTime = #{record.expireBeginTime,jdbcType=BIGINT},
+      expireEndTime = #{record.expireEndTime,jdbcType=BIGINT},
+      num = #{record.num,jdbcType=INTEGER},
+      useNum = #{record.useNum,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      lastAccess = #{record.lastAccess,jdbcType=BIGINT},
+      creatorId = #{record.creatorId,jdbcType=BIGINT},
+      createdBy = #{record.createdBy,jdbcType=VARCHAR},
+      createdTime = #{record.createdTime,jdbcType=BIGINT},
+      updaterId = #{record.updaterId,jdbcType=BIGINT},
+      updatedBy = #{record.updatedBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.herocheer.face.entity.AppOrderInfo">
+    update app_order_info
+    <set>
+      <if test="appAcctId != null">
+        appAcctId = #{appAcctId,jdbcType=BIGINT},
+      </if>
+      <if test="appExpensesId != null">
+        appExpensesId = #{appExpensesId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNo != null">
+        orderNo = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        payType = #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="payNo != null">
+        payNo = #{payNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payAmount != null">
+        payAmount = #{payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="expireBeginTime != null">
+        expireBeginTime = #{expireBeginTime,jdbcType=BIGINT},
+      </if>
+      <if test="expireEndTime != null">
+        expireEndTime = #{expireEndTime,jdbcType=BIGINT},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="useNum != null">
+        useNum = #{useNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="lastAccess != null">
+        lastAccess = #{lastAccess,jdbcType=BIGINT},
+      </if>
+      <if test="creatorId != null">
+        creatorId = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="createdBy != null">
+        createdBy = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        createdTime = #{createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="updaterId != null">
+        updaterId = #{updaterId,jdbcType=BIGINT},
+      </if>
+      <if test="updatedBy != null">
+        updatedBy = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.herocheer.face.entity.AppOrderInfo">
+    update app_order_info
+    set appAcctId = #{appAcctId,jdbcType=BIGINT},
+      appExpensesId = #{appExpensesId,jdbcType=BIGINT},
+      orderNo = #{orderNo,jdbcType=VARCHAR},
+      payType = #{payType,jdbcType=INTEGER},
+      payNo = #{payNo,jdbcType=VARCHAR},
+      payAmount = #{payAmount,jdbcType=DECIMAL},
+      type = #{type,jdbcType=INTEGER},
+      expireBeginTime = #{expireBeginTime,jdbcType=BIGINT},
+      expireEndTime = #{expireEndTime,jdbcType=BIGINT},
+      num = #{num,jdbcType=INTEGER},
+      useNum = #{useNum,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      lastAccess = #{lastAccess,jdbcType=BIGINT},
+      creatorId = #{creatorId,jdbcType=BIGINT},
+      createdBy = #{createdBy,jdbcType=VARCHAR},
+      createdTime = #{createdTime,jdbcType=BIGINT},
+      updaterId = #{updaterId,jdbcType=BIGINT},
+      updatedBy = #{updatedBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getAppOrderInfo" parameterType="java.lang.Long" resultType="com.herocheer.face.entity.AppOrderInfo">
+          SELECT
+          *
+          FROM app_order_info a
+          WHERE a.appAcctId = #{appAcctId}
+          and a.status = 1
+          and (
+          (a.type = 1 and a.num > a.useNum)
+          or
+          (a.type in (2,3) and a.expireBeginTime &lt;= unix_timestamp(now()) and a.expireEndTime >= unix_timestamp(now()))
+          )
+          order by a.createdTime
+  </select>
+
+
+  <update id="updateOrderUseNum" parameterType="java.lang.Long">
+    update
+      app_order_info
+    set useNum = useNum + 1
+    where id = #{orderId}
+    and num > useNum
+  </update>
+</mapper>
