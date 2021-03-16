@@ -1,12 +1,15 @@
 package com.herocheer.face.entity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Data;
 
+/**
+ * @author chenwf
+ * @desc
+ * @date 2021/3/16
+ * @company 厦门熙重电子科技有限公司
+ */
+@Data
 public class InterfaceAccountInfo {
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     private String userKey;
@@ -21,109 +24,15 @@ public class InterfaceAccountInfo {
 
     private Long lastAccess;
 
-    private Long creatorId;
+    private Long createdId;
 
     private String createdBy;
 
     private Long createdTime;
 
-    private Long updaterId;
+    private Long updateId;
 
-    private String updatedBy;
+    private String updateBy;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUserKey() {
-        return userKey;
-    }
-
-    public void setUserKey(String userKey) {
-        this.userKey = userKey;
-    }
-
-    public String getUserAuth() {
-        return userAuth;
-    }
-
-    public void setUserAuth(String userAuth) {
-        this.userAuth = userAuth;
-    }
-
-    public Integer getDayMaxCount() {
-        return dayMaxCount;
-    }
-
-    public void setDayMaxCount(Integer dayMaxCount) {
-        this.dayMaxCount = dayMaxCount;
-    }
-
-    public Integer getMonthMaxCount() {
-        return monthMaxCount;
-    }
-
-    public void setMonthMaxCount(Integer monthMaxCount) {
-        this.monthMaxCount = monthMaxCount;
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
-    public Long getLastAccess() {
-        return lastAccess;
-    }
-
-    public void setLastAccess(Long lastAccess) {
-        this.lastAccess = lastAccess;
-    }
-
-    public Long getCreatorId() {
-        return creatorId;
-    }
-
-    public void setCreatorId(Long creatorId) {
-        this.creatorId = creatorId;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Long getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(Long createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    public Long getUpdaterId() {
-        return updaterId;
-    }
-
-    public void setUpdaterId(Long updaterId) {
-        this.updaterId = updaterId;
-    }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-    }
+    private Long updateTime;
 }

@@ -6,12 +6,12 @@
     <result column="interfaceAcctId" jdbcType="BIGINT" property="interfaceAcctId" />
     <result column="appAcctId" jdbcType="BIGINT" property="appAcctId" />
     <result column="state" jdbcType="INTEGER" property="state" />
-    <result column="lastAccess" jdbcType="BIGINT" property="lastAccess" />
-    <result column="creatorId" jdbcType="BIGINT" property="creatorId" />
+    <result column="updateTime" jdbcType="BIGINT" property="updateTime" />
+    <result column="createdId" jdbcType="BIGINT" property="createdId" />
     <result column="createdBy" jdbcType="VARCHAR" property="createdBy" />
     <result column="createdTime" jdbcType="BIGINT" property="createdTime" />
-    <result column="updaterId" jdbcType="BIGINT" property="updaterId" />
-    <result column="updatedBy" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="updateId" jdbcType="BIGINT" property="updateId" />
+    <result column="updateBy" jdbcType="VARCHAR" property="updateBy" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,8 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, interfaceAcctId, appAcctId, state, lastAccess, creatorId, createdBy, createdTime, 
-    updaterId, updatedBy
+    id, interfaceAcctId, appAcctId, state, updateTime, createdId, createdBy, createdTime,
+    updateId, updateBy
   </sql>
   <select id="selectByExample" parameterType="com.herocheer.face.entity.AppInterfaceInfoExample" resultMap="BaseResultMap">
     select
@@ -110,12 +110,12 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into app_interface_info (interfaceAcctId, appAcctId, state, 
-      lastAccess, creatorId, createdBy, 
-      createdTime, updaterId, updatedBy
+      updateTime, createdId, createdBy,
+      createdTime, updateId, updateBy
       )
     values (#{interfaceAcctId,jdbcType=BIGINT}, #{appAcctId,jdbcType=BIGINT}, #{state,jdbcType=INTEGER}, 
-      #{lastAccess,jdbcType=BIGINT}, #{creatorId,jdbcType=BIGINT}, #{createdBy,jdbcType=VARCHAR}, 
-      #{createdTime,jdbcType=BIGINT}, #{updaterId,jdbcType=BIGINT}, #{updatedBy,jdbcType=VARCHAR}
+      #{updateTime,jdbcType=BIGINT}, #{createdId,jdbcType=BIGINT}, #{createdBy,jdbcType=VARCHAR},
+      #{createdTime,jdbcType=BIGINT}, #{updateId,jdbcType=BIGINT}, #{updateBy,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.herocheer.face.entity.AppInterfaceInfo">
@@ -133,11 +133,11 @@
       <if test="state != null">
         state,
       </if>
-      <if test="lastAccess != null">
-        lastAccess,
+      <if test="updateTime != null">
+        updateTime,
       </if>
-      <if test="creatorId != null">
-        creatorId,
+      <if test="createdId != null">
+        createdId,
       </if>
       <if test="createdBy != null">
         createdBy,
@@ -145,11 +145,11 @@
       <if test="createdTime != null">
         createdTime,
       </if>
-      <if test="updaterId != null">
-        updaterId,
+      <if test="updateId != null">
+        updateId,
       </if>
-      <if test="updatedBy != null">
-        updatedBy,
+      <if test="updateBy != null">
+        updateBy,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -162,11 +162,11 @@
       <if test="state != null">
         #{state,jdbcType=INTEGER},
       </if>
-      <if test="lastAccess != null">
-        #{lastAccess,jdbcType=BIGINT},
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=BIGINT},
       </if>
-      <if test="creatorId != null">
-        #{creatorId,jdbcType=BIGINT},
+      <if test="createdId != null">
+        #{createdId,jdbcType=BIGINT},
       </if>
       <if test="createdBy != null">
         #{createdBy,jdbcType=VARCHAR},
@@ -174,11 +174,11 @@
       <if test="createdTime != null">
         #{createdTime,jdbcType=BIGINT},
       </if>
-      <if test="updaterId != null">
-        #{updaterId,jdbcType=BIGINT},
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
       </if>
-      <if test="updatedBy != null">
-        #{updatedBy,jdbcType=VARCHAR},
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -203,11 +203,11 @@
       <if test="record.state != null">
         state = #{record.state,jdbcType=INTEGER},
       </if>
-      <if test="record.lastAccess != null">
-        lastAccess = #{record.lastAccess,jdbcType=BIGINT},
+      <if test="record.updateTime != null">
+        updateTime = #{record.updateTime,jdbcType=BIGINT},
       </if>
-      <if test="record.creatorId != null">
-        creatorId = #{record.creatorId,jdbcType=BIGINT},
+      <if test="record.createdId != null">
+        createdId = #{record.createdId,jdbcType=BIGINT},
       </if>
       <if test="record.createdBy != null">
         createdBy = #{record.createdBy,jdbcType=VARCHAR},
@@ -215,11 +215,11 @@
       <if test="record.createdTime != null">
         createdTime = #{record.createdTime,jdbcType=BIGINT},
       </if>
-      <if test="record.updaterId != null">
-        updaterId = #{record.updaterId,jdbcType=BIGINT},
+      <if test="record.updateId != null">
+        updateId = #{record.updateId,jdbcType=BIGINT},
       </if>
-      <if test="record.updatedBy != null">
-        updatedBy = #{record.updatedBy,jdbcType=VARCHAR},
+      <if test="record.updateBy != null">
+        updateBy = #{record.updateBy,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -232,12 +232,12 @@
       interfaceAcctId = #{record.interfaceAcctId,jdbcType=BIGINT},
       appAcctId = #{record.appAcctId,jdbcType=BIGINT},
       state = #{record.state,jdbcType=INTEGER},
-      lastAccess = #{record.lastAccess,jdbcType=BIGINT},
-      creatorId = #{record.creatorId,jdbcType=BIGINT},
+      updateTime = #{record.updateTime,jdbcType=BIGINT},
+      createdId = #{record.createdId,jdbcType=BIGINT},
       createdBy = #{record.createdBy,jdbcType=VARCHAR},
       createdTime = #{record.createdTime,jdbcType=BIGINT},
-      updaterId = #{record.updaterId,jdbcType=BIGINT},
-      updatedBy = #{record.updatedBy,jdbcType=VARCHAR}
+      updateId = #{record.updateId,jdbcType=BIGINT},
+      updateBy = #{record.updateBy,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -254,11 +254,11 @@
       <if test="state != null">
         state = #{state,jdbcType=INTEGER},
       </if>
-      <if test="lastAccess != null">
-        lastAccess = #{lastAccess,jdbcType=BIGINT},
+      <if test="updateTime != null">
+        updateTime = #{updateTime,jdbcType=BIGINT},
       </if>
-      <if test="creatorId != null">
-        creatorId = #{creatorId,jdbcType=BIGINT},
+      <if test="createdId != null">
+        createdId = #{createdId,jdbcType=BIGINT},
       </if>
       <if test="createdBy != null">
         createdBy = #{createdBy,jdbcType=VARCHAR},
@@ -266,11 +266,11 @@
       <if test="createdTime != null">
         createdTime = #{createdTime,jdbcType=BIGINT},
       </if>
-      <if test="updaterId != null">
-        updaterId = #{updaterId,jdbcType=BIGINT},
+      <if test="updateId != null">
+        updateId = #{updateId,jdbcType=BIGINT},
       </if>
-      <if test="updatedBy != null">
-        updatedBy = #{updatedBy,jdbcType=VARCHAR},
+      <if test="updateBy != null">
+        updateBy = #{updateBy,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -280,12 +280,12 @@
     set interfaceAcctId = #{interfaceAcctId,jdbcType=BIGINT},
       appAcctId = #{appAcctId,jdbcType=BIGINT},
       state = #{state,jdbcType=INTEGER},
-      lastAccess = #{lastAccess,jdbcType=BIGINT},
-      creatorId = #{creatorId,jdbcType=BIGINT},
+      updateTime = #{updateTime,jdbcType=BIGINT},
+      createdId = #{createdId,jdbcType=BIGINT},
       createdBy = #{createdBy,jdbcType=VARCHAR},
       createdTime = #{createdTime,jdbcType=BIGINT},
-      updaterId = #{updaterId,jdbcType=BIGINT},
-      updatedBy = #{updatedBy,jdbcType=VARCHAR}
+      updateId = #{updateId,jdbcType=BIGINT},
+      updateBy = #{updateBy,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 
