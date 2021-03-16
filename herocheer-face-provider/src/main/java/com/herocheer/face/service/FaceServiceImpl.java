@@ -9,12 +9,14 @@ import com.herocheer.face.util.*;
 import com.herocheer.face.util.Enums.FaceEnum;
 import com.herocheer.face.vo.AppInterfaceVo;
 import com.herocheer.face.vo.FaceRequestInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +27,7 @@ import java.util.Map;
  * @date 2020/6/11
  */
 @DubboService
+@Slf4j
 public class FaceServiceImpl implements FaceService {
     private static Logger logger = LoggerFactory.getLogger(FaceServiceImpl.class);    //日志记录
 
@@ -214,29 +217,46 @@ public class FaceServiceImpl implements FaceService {
     }
 
     public static void main(String[] args) {
-        //组装三方api参数
-        DES3 d = new DES3();
-        Map<String,Object> map = new HashMap<>();
-        Map<String,String> map1 = new HashMap<>();
-        map1.put("陈伟峰","350521199007031038");
-//        File file = null;
+//        obc4wnPaSLXZxkkAca9MGw==
+        String card = "knF6BGugHAOOfmuIgosv4PZdqcvjlYNHC+jL8Pw7Kzg=";
+        String userName = "obc4wnPaSLXZxkkAca9MGw==";
         String userAuth = "f296b9203d0840ae9a7e75fe5ce77b3e";
         String appKey = "350dd6f586f544e9a4a94ca7491e320c";
-        for(Map.Entry<String, String> entry : map1.entrySet()){
-            map.put("userAuth",userAuth);
-            map.put("userName",d.getEncString(entry.getKey(), appKey));//真是身份证
-            map.put("idCard",d.getEncString(entry.getValue(), appKey));//真是身份证
-            map.put("authenMode",d.getEncString("0X42",appKey));
-        try {
-            map.put("picData", d.getEncString(ImageUtils.encodeImgageToBase64(new File("D:\\chenwf\\xz\\xz2\\2.jpg")), appKey));
-        }catch (Exception e1){
-            throw new CommonException(MessageCodeLocale.SYATEM_ERROR,"系统异常");
-        }finally {
-
-        }
-            JSONObject jsonObject = HttpClients.httpCommunication("http://43.243.130.252:7576/sfrzfw/authentication/auth", map);
-            System.out.println(entry.getKey()+"============="+jsonObject.toJSONString());
-        }
+        //组装三方api参数
+        DES3 d = new DES3();
+        String s3 = AESUtil.aesEncrypt("陈伟峰", AESUtil.decryptKey);
+        String s = AESUtil.aesDecrypt(card, AESUtil.decryptKey);
+        String s2 = AESUtil.aesDecrypt(userName, AESUtil.decryptKey);
+        System.out.println(s);
+        System.out.println(s2);
+//        String decString = d.getDecString(s, appKey);
+//        String decString2 = d.getDecString(s2, appKey);
+        String decString = d.getEncString(s, appKey);
+        String decString2 = d.getEncString(s2, appKey);
+        String decString3 = d.getDecString("iCao0GdHJdtnD5e/HCkNiQ==", appKey);
+        System.out.println(decString);
+        System.out.println(decString2);
+//        Map<String,Object> map = new HashMap<>();
+//        Map<String,String> map1 = new HashMap<>();
+//        map1.put("陈伟峰","350521199007031038");
+////        File file = null;
+//        String userAuth = "f296b9203d0840ae9a7e75fe5ce77b3e";
+//        String appKey = "350dd6f586f544e9a4a94ca7491e320c";
+//        for(Map.Entry<String, String> entry : map1.entrySet()){
+//            map.put("userAuth",userAuth);
+//            map.put("userName",d.getEncString(entry.getKey(), appKey));//真是身份证
+//            map.put("idCard",d.getEncString(entry.getValue(), appKey));//真是身份证
+//            map.put("authenMode",d.getEncString("0X42",appKey));
+//        try {
+//            map.put("picData", d.getEncString(ImageUtils.encodeImgageToBase64(new File("D:\\chenwf\\xz\\xz2\\2.jpg")), appKey));
+//        }catch (Exception e1){
+//            throw new CommonException(MessageCodeLocale.SYATEM_ERROR,"系统异常");
+//        }finally {
+//
+//        }
+//            JSONObject jsonObject = HttpClients.httpCommunication("http://43.243.130.252:7576/sfrzfw/authentication/auth", map);
+//            System.out.println(entry.getKey()+"============="+jsonObject.toJSONString());
+//        }
 
 
 //        String cluster = "110.80.140.198:15814;110.80.140.198:15815;110.80.140.198:15824;110.80.140.198:15825;110.80.140.198:15834;110.80.140.198:15835";//ip + ":" + port 多个 ;隔开

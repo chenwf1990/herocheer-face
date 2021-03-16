@@ -47,10 +47,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <!--这里写上main方法所在类的路径-->
                 <configuration>
-                    <!-- 工程主入口-->
                     <mainClass>com.herocheer.face.Application</mainClass>
-                    <includeSystemScope>true</includeSystemScope>
                 </configuration>
                 <executions>
                     <execution>

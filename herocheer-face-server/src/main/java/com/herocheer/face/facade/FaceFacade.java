@@ -29,7 +29,6 @@ public class FaceFacade {
         JSONObject resultJson = new JSONObject();
         try {
 //            String body = IoUtil.read(request.getInputStream(), "utf-8");
-            log.info("认证信息：{}",json);
             FaceRequestInfo faceRequestInfo = JSONObject.parseObject(JSONObject.toJSONString(json),FaceRequestInfo.class);
             resultJson = faceService.checkIdentityAuth(faceRequestInfo);
         } catch (CommonException e1){
