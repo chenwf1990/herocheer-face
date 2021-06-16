@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.herocheer.cache.bean.RedisClient;
 import com.herocheer.face.entity.AppAccountInfo;
 import com.herocheer.face.entity.AppOrderInfo;
+import com.herocheer.face.event.InvokeLogEvent;
 import com.herocheer.face.util.*;
 import com.herocheer.face.util.Enums.FaceEnum;
 import com.herocheer.face.vo.AppInterfaceVo;
@@ -14,9 +15,9 @@ import org.apache.dubbo.config.annotation.DubboService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +40,8 @@ public class FaceServiceImpl implements FaceService {
     private AppOrderInfoService appOrderInfoService;
     @Autowired
     private RedisClient redisClient;
+    @Autowired
+    private ApplicationEventPublisher publisher;
 
     /**
      * 人脸识别：与身份证识别
@@ -79,20 +82,26 @@ public class FaceServiceImpl implements FaceService {
             }
         }
         JSONObject jsonObject = HttpClients.httpCommunication("http://43.243.130.252:7576/sfrzfw/authentication/auth", map);
+        //调用次数+1
+        appInterfaceVo.setMsg(jsonObject.toJSONString());
+        updateUserNum(faceRequestInfo,appInterfaceVo);
+        return buildResult(jsonObject,faceRequestInfo);
+    }
+
+    //组装结果
+    private JSONObject buildResult(JSONObject jsonObject, FaceRequestInfo faceRequestInfo) {
         boolean res = jsonObject != null ? (Boolean)jsonObject.get("success") : false;
         if(res){
+            jsonObject.put("code","0");
+            jsonObject.put("msg","ok");
             String obj = jsonObject.get("obj").toString();
             if(faceRequestInfo.getAuthenMode().equals("0X40")){
-                if(obj.startsWith("0")){
-                    jsonObject = updateUserNum(jsonObject,faceRequestInfo,appInterfaceVo);
-                }else{
+                if(!obj.startsWith("0")){
                     jsonObject.put("code","999");
                     jsonObject.put("msg", FaceEnum.getMsg(obj.substring(0,1)));
                 }
             }else {
-                if(obj.startsWith("00")){
-                    jsonObject = updateUserNum(jsonObject,faceRequestInfo,appInterfaceVo);
-                }else{
+                if(!obj.startsWith("00")){
                     StringBuilder tmp=new StringBuilder(2);
                     if(!obj.startsWith("0")){
                         tmp.append("1").append(obj.substring(0,1));
@@ -110,15 +119,13 @@ public class FaceServiceImpl implements FaceService {
         return jsonObject;
     }
 
-    private JSONObject updateUserNum(JSONObject jsonObject, FaceRequestInfo faceRequestInfo, AppInterfaceVo appInterfaceVo) {
+    private void updateUserNum(FaceRequestInfo faceRequestInfo, AppInterfaceVo appInterfaceVo) {
+        faceRequestInfo.setPicData("delete");
         appInterfaceVo.setReqInfo(JSONObject.toJSONString(faceRequestInfo));
-//        rabbitTemplate.convertAndSend(RabbbitKey.EXCHANGE, RabbbitKey.RUTE_KEY, JSONObject.toJSONString(appInterfaceVo));
+        publisher.publishEvent(new InvokeLogEvent(appInterfaceVo));
         addRedis(appInterfaceVo.getInterfaceAcctId());
         //更新订单使用次数
         appOrderInfoService.updateOrderUseNum(appInterfaceVo.getOrderId());
-        jsonObject.put("code","0");
-        jsonObject.put("msg","ok");
-        return jsonObject;
     }
 
     private void addRedis(Long interfaceAcctId) {

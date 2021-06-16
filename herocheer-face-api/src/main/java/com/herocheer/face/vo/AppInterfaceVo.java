@@ -14,6 +14,7 @@ public class AppInterfaceVo implements Serializable {
     private Integer dayMaxCount;
     private Integer monthMaxCount;
     private String reqInfo;
+    private String msg;
     private Long orderId;
 
     public Long getAppAcctId() {
@@ -78,5 +79,13 @@ public class AppInterfaceVo implements Serializable {
 
     public void setOrderId(Long orderId) {
         this.orderId = orderId;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

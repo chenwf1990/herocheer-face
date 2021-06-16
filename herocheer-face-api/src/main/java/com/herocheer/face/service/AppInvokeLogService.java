@@ -8,5 +8,5 @@ public interface AppInvokeLogService {
     /**
      * 添加应用调用日志
      */
-    void addLog(Long appAcctId, Long interfaceAcctId, String reqInfo);
+    void addLog(Long appAcctId, Long interfaceAcctId, String reqInfo, String msg);
 }

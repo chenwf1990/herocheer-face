@@ -20,11 +20,12 @@ public class AppInvokeLogServiceImpl implements AppInvokeLogService {
      * 添加应用调用日志
      */
     @Override
-    public void addLog(Long appAcctId, Long interfaceAcctId,String reqInfo) {
+    public void addLog(Long appAcctId, Long interfaceAcctId,String reqInfo, String msg) {
         AppInvokeLog log = new AppInvokeLog();
         log.setAppAcctId(appAcctId);
         log.setInterfaceAcctId(interfaceAcctId);
         log.setReqInfo(reqInfo);
+        log.setMsg(msg);
         log.setCreatedTime(new Date().getTime());
         appInvokeLogMapper.insertSelective(log);
     }
