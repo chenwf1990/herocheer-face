@@ -180,7 +180,7 @@ public class FaceServiceImpl implements FaceService {
         //根据appId查找应用信息
         AppAccountInfo appAccountInfo = appAccountInfoService.findByAppId(dataMap.get("appId").toString());
         if(appAccountInfo == null){
-            logger.debug("invalid appId");
+            logger.error("invalid appId");
             throw new CommonException(MessageCodeLocale.INVALID_APPID, "invalid appId");
         }
         //校验签名
@@ -191,14 +191,14 @@ public class FaceServiceImpl implements FaceService {
         //根据appId查询是否开通接口资费
         List<AppOrderInfo> appOrderInfos = appOrderInfoService.getAppOrderInfo(appAccountInfo.getId());
         if(appOrderInfos.isEmpty()){
-            logger.debug("Unopened interface");
+            logger.error("Unopened interface");
             throw new CommonException(MessageCodeLocale.UN_OPEN_INTERFACE, "Unopened interface");
         }
 
         //根据appId查找接口账户信息
         List<AppInterfaceVo> interFaceInfo = appInterfaceInfoService.getAppInterfaceInfo(appAccountInfo.getId());
         if(interFaceInfo.isEmpty()){
-            logger.debug("Unopened interface");
+            logger.error("Unopened interface");
             throw new CommonException(MessageCodeLocale.UN_OPEN_INTERFACE, "Unopened interface");
         }
         AppInterfaceVo av = null;
@@ -214,7 +214,7 @@ public class FaceServiceImpl implements FaceService {
             }
         }
         if(av == null){
-            logger.debug("Interface times are used up");
+            logger.error("Interface times are used up");
             throw new CommonException(MessageCodeLocale.UN_OPEN_INTERFACE, "Interface times are used up");
         }
         if(appOrderInfos.get(0).getType() == 1) {//类型是次数的，有次数限制
